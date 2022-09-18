@@ -74,13 +74,13 @@ router.get('/delete/article/:_id', (req, res) => {
 })
 
 router.get('/:_id', (req, res) => {
-    const {_id} = req.params._id
-    articles.findById(_id)
+    articles.findById(req.params._id)
     .then(post => {
         res.render('article', {
-            title: this.title,
-            content: this.content
-        })
+            _id: post._id,
+            title: post.title,
+            content: post.content
+        })  
     })
 })
 
