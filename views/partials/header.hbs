@@ -1,0 +1,17 @@
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
+    <div style="max-width: 1240px" class="justify-content-between d-flex w-100">
+        <a class="navbar-brand text-white">Daily News</a>
+
+        {{#if isIndex}}
+            <a href="/post" class="btn btn-success" role="button">
+                <i class="mr-1 fa fa-pencil"></i>
+                Post Article
+            </a>
+        {{else}}
+            <a href="/" class="btn btn-outline-success" role="button">
+                <i class="mr-1 fa fa-sign-out"></i>
+                Return
+            </a>
+        {{/if}}
+    </div>
+</nav>

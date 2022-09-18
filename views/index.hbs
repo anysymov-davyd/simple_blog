@@ -1,0 +1,93 @@
+{{#if data.length}}
+    <div style="max-width: 1240px" class="d-flex justify-content-center mx-auto">
+        <div class="d-flex mt-5">
+            <div class="d-flex row flex-wrap justify-content-center">
+                {{#each data}}
+                    <div class="m-1 d-flex flex-column">
+                        <div class="custom-item-container">
+                            <div class="rounded border bg-light custom-item p-3 d-flex flex-column">
+                                <h4 class="title m-0">
+                                    <a href="/{{_id}}">
+                                        {{title}}
+                                    </a>
+                                </h4>
+                                <p class="text-justify text m-0 mt-2">{{content}}</p>
+                            </div>
+                        </div>
+
+                        <div class="fa-icons mt-auto d-flex flex-row bg-white" style="gap: 12px">
+                            <a href="/delete/article/{{_id}}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                            <a href="/edit_{{_id}}">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .custom-item{
+            width: 240px;
+            height: 240px;
+            max-height: 240px;
+            overflow: hidden;
+        }
+
+        .custom-item-container::after{
+            display: block;
+            content: '';
+            width: 206.4px;
+            min-height: 32px;
+            background: linear-gradient(0, #f8f9fa 40%, #f8f9fa80 90%, transparent);
+            position: relative;
+            top: -33px;
+            left: calc((240px - 206.4px) / 2);
+        }
+
+        .custom-item-container{
+            height: 216px;
+        }
+
+        .custom-item::after{
+            position: relative;
+            z-index:2;
+            width: 206.4px;
+            height: 16px;
+        }
+
+        .custom-item-container:hover ~ .fa-icons{
+            opacity: 1;
+        }
+
+        .fa-icons:hover{
+            opacity: 1;
+        }
+
+        .fa-icons{
+            padding: 0 4px;
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+            width: fit-content;
+            border-radius: 5px;
+            position: relative; 
+            left: 16px;
+            z-index: 10;
+            opacity: 0;
+            top: 12px;
+        }
+
+        .fa-icons .fa{
+            color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+
+{{else}}
+
+    <div class="mt-5 d-flex align-items-center justify-content-center flex-column">
+        <h1 class="text-black-50 text-center font-weight-bold">No articles</h1>
+        <h4 class="text-muted text-center">Write your first post</h2>
+    </div>
+{{/if}}
