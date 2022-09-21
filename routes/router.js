@@ -52,16 +52,43 @@ router.get('/edit_:_id', (req, res) => {
     })
 })
 
-router.post('/edit/article/:_id', (req, res) => {
-    articles.findById(req.params._id)
-    .then(post => {
-        post.update({
-            title: req.body.title,
-            content: req.body.content
-        }).then(() => {
-            res.redirect('/')
+router.post('/edit_:_id', [
+    check('title')
+        .trim()
+        .notEmpty()
+        .withMessage('Title must not be empty.')
+        .isLength({ max: 40 })
+        .withMessage('Title can not be longer than 40 characters.'),
+
+    check('content')
+        .trim()
+        .isLength({ min: 30 })
+        .withMessage('Text must be at least 30 characters.')
+        .isLength({ max: 30000 })
+        .withMessage('Text can not be longer than 30000 characters.')
+], async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        articles.findById(req.params._id)
+        .then(post => { 
+            res.render('edit', {
+                _id: req.params._id,
+                title: req.body.title,
+                content: req.body.content,
+                errors: errors.array()
+            })  
         })
-    })
+    } else{
+        articles.findById(req.params._id)
+        .then(post => {
+            post.updateOne({
+                title: req.body.title,
+                content: req.body.content
+            }).then(() => {
+                res.redirect('/')
+            })
+        })
+    }
 })
 
 router.get('/delete/article/:_id', (req, res) => {
@@ -77,7 +104,7 @@ router.get('/:_id', (req, res) => {
     articles.findById(req.params._id)
     .then(post => {
         res.render('article', {
-            _id: post._id,
+            _id: req.params._id,
             title: post.title,
             content: post.content
         })  
